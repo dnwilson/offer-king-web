@@ -1,0 +1,34 @@
+.profile {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  max-width: 450px;
+  min-width: 240px;
+  padding: 2rem 1rem;
+  text-align: center;
+  width: 100%;
+
+  .name {
+    margin-bottom: 1rem;
+  }
+
+  .details {
+    margin: 0;
+  }
+}
+
+.avatar {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  .initials {
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 50%;
+    color: var(--secondary);
+    display: inline-flex;
+    height: 75px;
+    justify-content: center;
+    width: 75px;
+  }
+}
