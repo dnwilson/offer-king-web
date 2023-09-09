@@ -10,23 +10,13 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     color: var(--primary);
     cursor: pointer;
-  
-    &.offer-claim {
-      background: var(--secondary);
-    }
-  
-    &.offer-remove {
-      background: var(--warning);
-    }
-  
-    &.offer-unclaimed {
-      background: var(--card-bg);
-    }
   }
 
   .offer-img {
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
+    height: 300px;
+    object-fit: cover;
     width: 100%;
   }
 
@@ -62,11 +52,7 @@
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;
-    
-    &.claim {
-      background: var(--secondary);
-    }
-    
+
     &.claimed {
       background: var(--secondary);
     }

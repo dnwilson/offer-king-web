@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import './Offers.scss'
 import { AppContext } from '../AppContext'
 
-const OfferStatus = ({ status }) => {
+const OfferStatus = () => {
   return(
     <div className="status-wrapper">
-      <div className={`status ${status}`}>{status}</div>
+      <div className={`status claimed`}>claimed</div>
     </div>
   )
 }
@@ -38,30 +38,22 @@ const Offer = ({ offer }) => {
   const { setOffers } = useContext(AppContext)
   const [status, setStatus] = useState(offer.claimed ? "claimed" : "default");
 
-  const handleMouseOver = () => {
-    setStatus(offer.claimed ? "remove" : "claim")
-  }
-
-  const handleMouseOut = () => {
-    setStatus(offer.claimed ? "claimed" : "default")
-  }
-
   const claimIt = () => {
     if (offer.claimed) {
       unclaimOffer(offer.id, setOffers)
     } else {
       claimOffer(offer.id, setOffers)
     }
+    setStatus(offer.claimed ? "claimed" : "default")
   }
 
   return (
-    <a
-      onMouseEnter={handleMouseOver}
-      onMouseLeave={handleMouseOut} 
-      onClick={claimIt} className={`offer offer-${status}`} id={`offer-${offer.id}`}>
+    <a onClick={claimIt} className={`offer offer-${status}`} id={`offer-${offer.id}`}>
       <>
-        <OfferStatus claimed={offer.claimed} status={status} />
-        <img src={offer.image} className='offer-img' />
+        { offer.claimed &&
+          <OfferStatus />
+        }
+        <img src={offer.image} className='offer-img' lazy />
         <div className='offer-body'>
           <h2 className='offer-desc'>{offer.description}</h2>
         </div>
@@ -95,6 +87,7 @@ const OfferList = () => {
 
   return(
     <div className='offers'>
+      <h1>Qualifying Offers</h1>
       { offers?.length > 0
         ? offers.map(offer => <Offer key={offer.id} offer={offer} />)
         : <>No available offers</>

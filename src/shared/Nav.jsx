@@ -1,14 +1,15 @@
 import logo from '../assets/king-icon.png'
+import { Link } from 'react-router-dom'
 import './Nav.scss'
 
 const Logo = ({ className }) => {
   return (
-    <a href='/' className={`logo ${className ? className : ''}`}>
+    <Link to='/' className={`logo ${className ? className : ''}`}>
       <div className='logo-img'>
         <img src={logo} className='img' />
       </div>
       <span className='brand-name'>OfferKing</span>
-    </a>
+    </Link>
   )
 }
 
@@ -23,7 +24,7 @@ const Nav = ({ user, logout }) => {
             <li className='nav-item dropdown'>
               <a href='#' className='nav-link'>{user.first_name}</a>
               <ul className='nav-items dropdown-content'>
-                <li className='nav-item'><a href='/profile' className='nav-link'>Profile</a></li>
+                <li className='nav-item'><Link to='/profile' className='nav-link'>Profile</Link></li>
                 <li className='nav-item'><a onClick={logout} data-method='delete' className='nav-link'>Log Out</a></li>
               </ul>
             </li>

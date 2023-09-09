@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const baseURL = () => {
   if (import.meta.env.DEV) {
     return 'http://localhost:3000/api/v1'
@@ -7,6 +8,7 @@ const baseURL = () => {
     return 'https://offer-king.fly.dev/api/v1'
   }
 }
+
 const http = axios.create({
   baseURL: baseURL(),
   headers: {

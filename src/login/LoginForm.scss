@@ -1,26 +1,23 @@
-.auth {
-  align-items: center;
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-
-  .brand-name {
-    display: block;
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-top: 0.5rem;
-  }
-}
-
 .login {
   align-items: center;
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  width: 100%;
+  padding: 0 1rem;
+
+   .brand-name {
+    color: var(--primary);
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+
+    &:hover,
+    &:visited {
+      color: var(--primary);
+    }
+  }
 }
 
 .alert {
