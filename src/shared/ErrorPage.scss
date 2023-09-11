@@ -1,0 +1,24 @@
+.error-page {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+  
+  .content {
+    text-align: center;
+  }
+
+  .error-title,
+  .error-subtitle {
+    margin: 0;
+  }
+
+  .error-title {
+    font-size: 6rem;
+  }
+
+  .error-subtitle {
+    font-size: 2rem;
+  }
+}
