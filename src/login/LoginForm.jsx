@@ -1,79 +1,91 @@
-import { useContext, useRef, useState } from 'react'
-import { AppContext } from '../AppContext'
-import './LoginForm.scss'
-import { Logo } from '../shared/Nav'
-import { post } from '../Api'
+import { useState } from 'react';
+import { Logo } from '../shared/Nav';
+import useApi from '../hooks/useApi';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const email = useRef()
-  const password = useRef()
-  const { setSession, currentUser, token } = useContext(AppContext)
-  const [errors, setErrors] = useState({ email: '', password: '' })
-  const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+  const initialData = { email: '', password: '' };
+  const [formData, setFormData] = useState(initialData);
+  const navigate = useNavigate();
+  const { isLoading, loginUser } = useApi();
+  const [errors, setErrors] = useState({});
+  const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-  const validate = (ref) => {
-    if (ref.current.type == 'email') {
-      const validEmail = EMAIL_REGEX.test(String(ref.current.value).toLowerCase())
-      const message = validEmail ? '' : 'Please enter a valid email address'
-      setErrors({...errors, email: message})
+  const validate = (field, value) => {
+    setErrors({ ...errors, form: null });
+    if (field == 'email') {
+      const validEmail = EMAIL_REGEX.test(String(value).toLowerCase());
+      const message = validEmail ? null : 'Please enter a valid email address';
+      setErrors({ ...errors, email: message });
     }
-  }
+  };
 
-  const submitToServer = () => {
-    const params = { email: email.current.value, password: password.current.value }
-    post('login', params)
-      .then(response => response.data)
-      .then((data) => {
-        setSession(data)
-      })
-      .catch((error) => {
-        email.current.value = ''
-        password.current.value = ''
-        setErrors({...errors, form: "Invalid login"})
-        setInterval(() => { setErrors({...errors, form: null}) }, 1500);
-      })
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
 
-  const onSubmit = (e) => {
-    setErrors({...errors, form: null})
-    e.preventDefault()
+    validate(name, value);
+  };
 
-    submitToServer()
-  }
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-  return(
-    <div className="login">
+    const response = await loginUser(formData);
+    if (response) {
+      navigate('/', { replace: true });
+    } else {
+      setErrors({ ...errors, form: 'Invalid email or password' });
+      setFormData(initialData);
+    }
+  };
+
+  return (
+    <div className="login auth">
+      {isLoading && (
+        <div className="progress">
+          <div className="progress-wheel"></div>
+        </div>
+      )}
       <Logo />
-      <form method='post' className='form' onSubmit={onSubmit}>
-        { errors.form &&
-          <div className="alert">{errors.form}</div>
-        }
-        <div className={`form-field ${ errors.email != '' ? 'error' : null }`}>
-          <label htmlFor='email'>Email</label>
+      <form method="post" className="form" onSubmit={onSubmit}>
+        {errors.form && <div className="alert">{errors.form}</div>}
+        <div className={`form-field ${errors.email != null ? 'error' : null}`}>
+          <label htmlFor="email">Email</label>
           <input
-            id='email'
-            type='email'
-            name='email'
-            ref={email}
-            onBlur={validate.bind(this, email)}
-            required />
-            {errors.email != '' &&
-              <span className='error-message'>{errors.email}</span>
-            }
+            id="email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.email != '' && (
+            <span className="error-message">{errors.email}</span>
+          )}
         </div>
-        <div className='form-field'>
-          <label htmlFor='password'>Password</label>
+        <div className="form-field">
+          <label htmlFor="password">Password</label>
           <input
-            id='password'
-            type='password'
-            name='password'
-            ref={password}
-            required />
+            id="password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+          />
         </div>
-        <input type='submit' value='Login' className='btn btn-primary' />
+        <input type="submit" value="Login" className="btn btn-primary" />
+        <div className="actions">
+          <p>
+            Not a member? <Link to="/sign-up">Sign up</Link>
+          </p>
+        </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default LoginForm;

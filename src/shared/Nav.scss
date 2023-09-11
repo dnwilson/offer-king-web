@@ -38,61 +38,6 @@
   }
 }
 
-.logo {
-  align-items: center;
-  color: var(--primary);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-decoration: none;
-
-  &.brand {
-    color: var(--primary);
-    flex-direction: row;
-
-    .logo-img {
-      padding: 0.25rem;
-
-      .img {
-        height: 20px;
-        margin: 0.15rem;
-        max-width: 20px;
-      }
-    }
-
-    span {
-      display: none;
-      font-weight: 500;
-      font-size: 1rem;
-      margin-left: 0.5rem;
-  
-      @media (min-width: 540px) {
-        display: inline;
-      }
-    }
-  }
-
-  &:hover {
-    color: darken(#333, 10%);
-  }
-
-  .logo-img {
-    background: var(--primary);
-    border-radius: 50%;
-    display: flex;
-    padding: 1rem;
-    width: fit-content;
-
-    .img {
-      height: 25px;
-      max-width: 25px;
-      object-fit: cover;
-      width: auto;
-    }
-  }
-}
-
-
 .dropdown {
   float: right;
   overflow: hidden;

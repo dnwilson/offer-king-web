@@ -1,17 +1,6 @@
-import logo from '../assets/king-icon.png'
 import { Link } from 'react-router-dom'
 import './Nav.scss'
-
-const Logo = ({ className }) => {
-  return (
-    <Link to='/' className={`logo ${className ? className : ''}`}>
-      <div className='logo-img'>
-        <img src={logo} className='img' />
-      </div>
-      <span className='brand-name'>OfferKing</span>
-    </Link>
-  )
-}
+import Logo from './Logo'
 
 const Nav = ({ user, logout }) => {
   return(
